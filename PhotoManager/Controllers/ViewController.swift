@@ -44,10 +44,7 @@ class ViewController: UIViewController {
     private func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-//    private func isFiltering() -> Bool {
-//        return searchController.isActive && !searchBarIsEmpty()
-//    }
-   
+
     private func getNewPhotos(){
         dataFetcherService.fetchNewPhotos { [weak self] (photos) in
                    guard let photos = photos else {return}
@@ -65,11 +62,12 @@ class ViewController: UIViewController {
     private func getSearchPhotos(query: String){
         dataFetcherService.fetchSearchPhotos(query: query) { [weak self] (photos) in
             guard let photos = photos else {return}
+            self?.pictureArray = []
             self?.pictureArray = self!.sliceArray(photos: photos.results, pageCount: 3)
             print(photos.results.count)
             self?.pagesCount = 3
             self?.pageControl.numberOfPages = self!.pagesCount
-            self!.pageControl.currentPage = 0
+//            self!.pageControl.currentPage = 0
 
             DispatchQueue.main.async {
                 self?.collectionView?.reloadData()

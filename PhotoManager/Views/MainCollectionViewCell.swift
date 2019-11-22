@@ -10,7 +10,13 @@ import UIKit
 
 class MainCollectionViewCell : UICollectionViewCell {
     
-    var imagesArr : Picture?
+    var imagesArr : Picture?{
+        didSet {
+            DispatchQueue.main.async {
+                self.photoCollectionView.reloadData()
+            }
+        }
+    }
     override init(frame: CGRect) {
         super.init(frame: .zero)
         photoCollectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "photoCellId")
