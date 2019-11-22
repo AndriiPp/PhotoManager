@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     private lazy var dataFetcherService = DataFetcherService()
     
-    private lazy var pictureArray : Picture = []
+    private lazy var pictureArray : [Picture] = []
     private lazy var pagesCount: Int = 0
     
     private var collectionView: UICollectionView?
@@ -28,24 +28,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
-//        dataFetcherService.fetchNewPhotos { [weak self] (photos) in
-//            guard let photos = photos else {return}
-//            self?.pictureArray = photos
-//            print(photos.count)
-//            self?.pagesCount = 2
-//            self?.pageControl.numberOfPages = self!.pagesCount
-//            self!.pageControl.currentPage = 0
-//
-//            DispatchQueue.main.async {
-//                self?.collectionView?.reloadData()
-//            }
-//        }
-        dataFetcherService.fetchSearchPhotos(query: "football") { [weak self] (photos) in
+        getNewPhotos()
+    }
+    
+    //MARK: - Private Methods
+    private func getNewPhotos(){
+        dataFetcherService.fetchNewPhotos { [weak self] (photos) in
+                   guard let photos = photos else {return}
+                   self?.pagesCount = 3
+                   self?.pictureArray = self!.sliceArray(photos: photos, pageCount: 3)
+                   print(photos.count)
+                   self?.pageControl.numberOfPages = self!.pagesCount
+                   self!.pageControl.currentPage = 0
+
+                   DispatchQueue.main.async {
+                       self?.collectionView?.reloadData()
+                   }
+               }
+    }
+    private func getSearchPhotos(query: String){
+        dataFetcherService.fetchSearchPhotos(query: query) { [weak self] (photos) in
             guard let photos = photos else {return}
-            self?.pictureArray = photos.results
+            self?.pictureArray = self!.sliceArray(photos: photos.results, pageCount: 3)
             print(photos.results.count)
-            self?.pagesCount = 2
+            self?.pagesCount = 3
             self?.pageControl.numberOfPages = self!.pagesCount
             self!.pageControl.currentPage = 0
 
@@ -55,9 +61,14 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    //MARK: - Private Methods
-    
+    private func sliceArray(photos: [pictureelement], pageCount : Int) -> [Picture]{
+        var arrayOfPhotos : [Picture] = []
+        for i in 0..<pageCount {
+            let arrayOfPhoto : [pictureelement] = Array(photos[i*6...(i*6+5)])
+            arrayOfPhotos.append(arrayOfPhoto)
+        }
+        return arrayOfPhotos
+    }
     private func setupViews() {
         
         navigationItem.title = "PhotoViewer"
@@ -94,7 +105,7 @@ extension ViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MainCollectionViewCell.self), for: indexPath) as? MainCollectionViewCell {
-            cell.imagesArr = pictureArray
+            cell.imagesArr = pictureArray[indexPath.row]
             return cell
         }
         

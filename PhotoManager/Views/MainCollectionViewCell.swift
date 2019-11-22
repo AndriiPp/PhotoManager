@@ -38,9 +38,17 @@ class MainCollectionViewCell : UICollectionViewCell {
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
-    
+  
     override func prepareForReuse() {
         imagesArr = nil
+    }
+    func topMostController() -> UIViewController {
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        var rootViewController: UIViewController = keyWindow!.rootViewController!
+      while (rootViewController.presentedViewController != nil) {
+        rootViewController = rootViewController.presentedViewController!
+      }
+      return rootViewController
     }
 }
 
@@ -62,6 +70,22 @@ extension MainCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let image = imagesArr?[indexPath.row],
+            let ulr = image.urls?.full {
+            Downloader.image(link: ulr) { (image) in
+                guard let image = image else{return}
+                let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit)
+                let transitionInfo = GSTransitionInfo(fromView: self.photoCollectionView)
+                let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+                imageViewer.dismissCompletion = {
+                    print("dismiss")
+                }
+                let rooViewController = self.topMostController()
+                rooViewController.present(imageViewer, animated: true, completion: nil)
+            }
+        }
+    }
 }
 extension MainCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -69,7 +93,7 @@ extension MainCollectionViewCell: UICollectionViewDelegateFlowLayout {
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
           let size = collectionView.frame.size
-             return CGSize(width: size.width/3, height: (size.height-55)/10)
+             return CGSize(width: size.width/2, height: (size.height-55)/3)
          }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
              return 0.0

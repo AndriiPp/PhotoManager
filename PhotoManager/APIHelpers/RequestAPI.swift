@@ -12,16 +12,13 @@ extension RequestAPI {
     private var queryParams: [URLQueryItem] {
         var params: [URLQueryItem] = []
         params.append(URLQueryItem.init(name: "client_id", value: "4c9fbfbbd92c17a2e95081cec370b4511659666240eb4db9416c40c641ee843b"))
+        params.append(URLQueryItem.init(name: "per_page", value: "18"))
         
         switch self {
         case .getPhotos:
-            params.append(URLQueryItem.init(name: "page", value: "10"))
-            params.append(URLQueryItem.init(name: "per_page", value: "60"))
             return params
         case .searchPhotos(let query):
             params.append(URLQueryItem.init(name: "query", value: query))
-            params.append(URLQueryItem.init(name: "page", value: "10"))
-            params.append(URLQueryItem.init(name: "per_page", value: "60"))
             return params
         }
     }

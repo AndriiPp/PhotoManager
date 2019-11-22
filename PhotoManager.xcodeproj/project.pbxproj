@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E088792238750560011CBB1 /* GSImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E088791238750560011CBB1 /* GSImageInfo.swift */; };
 		7E098D332385BF6E002B1DDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E098D322385BF6E002B1DDE /* AppDelegate.swift */; };
 		7E098D352385BF6E002B1DDE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E098D342385BF6E002B1DDE /* SceneDelegate.swift */; };
 		7E098D372385BF6E002B1DDE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E098D362385BF6E002B1DDE /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E088791238750560011CBB1 /* GSImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSImageInfo.swift; sourceTree = "<group>"; };
 		7E098D2F2385BF6E002B1DDE /* PhotoManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E098D322385BF6E002B1DDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7E098D342385BF6E002B1DDE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				7E0D018C2386FAB2001F6055 /* Downloader.swift */,
+				7E088791238750560011CBB1 /* GSImageInfo.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				7E098D372385BF6E002B1DDE /* ViewController.swift in Sources */,
 				7E098D332385BF6E002B1DDE /* AppDelegate.swift in Sources */,
 				7E098D482385C08F002B1DDE /* RequestAPI.swift in Sources */,
+				7E088792238750560011CBB1 /* GSImageInfo.swift in Sources */,
 				7E098D352385BF6E002B1DDE /* SceneDelegate.swift in Sources */,
 				7E0D5FEE2385DF4C00837094 /* DataFetcherService.swift in Sources */,
 			);
