@@ -50,7 +50,6 @@ class ViewController: UIViewController {
                    guard let photos = photos else {return}
                    self?.pagesCount = 3
                    self?.pictureArray = self!.sliceArray(photos: photos, pageCount: 3)
-                   print(photos.count)
                    self?.pageControl.numberOfPages = self!.pagesCount
                    self!.pageControl.currentPage = 0
 
@@ -64,10 +63,8 @@ class ViewController: UIViewController {
             guard let photos = photos else {return}
             self?.pictureArray = []
             self?.pictureArray = self!.sliceArray(photos: photos.results, pageCount: 3)
-            print(photos.results.count)
             self?.pagesCount = 3
             self?.pageControl.numberOfPages = self!.pagesCount
-//            self!.pageControl.currentPage = 0
 
             DispatchQueue.main.async {
                 self?.collectionView?.reloadData()

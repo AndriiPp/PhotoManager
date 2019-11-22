@@ -17,6 +17,8 @@ class MainCollectionViewCell : UICollectionViewCell {
             }
         }
     }
+    //MARK: - init
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         photoCollectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "photoCellId")
@@ -26,8 +28,9 @@ class MainCollectionViewCell : UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    //MARK: - setup collectionView
     
-    func setupViews(){
+    private func setupViews(){
          addSubview(photoCollectionView)
 
          photoCollectionView.delegate = self
@@ -57,6 +60,7 @@ class MainCollectionViewCell : UICollectionViewCell {
       return rootViewController
     }
 }
+//MARK: - UICollectionViewDataSource
 
 extension MainCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -93,6 +97,8 @@ extension MainCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         }
     }
 }
+//MARK: - UICollectionViewDelegateFlowLayout
+
 extension MainCollectionViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

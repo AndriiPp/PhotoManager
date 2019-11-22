@@ -9,6 +9,7 @@
 import UIKit
 
 struct Downloader {
+    //MARK: - Download Image
     
     static func image(link: String, withComplection complection: @escaping (UIImage?) -> ()) {
         guard let url = URL(string: link) else {

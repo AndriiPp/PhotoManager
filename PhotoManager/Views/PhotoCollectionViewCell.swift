@@ -16,6 +16,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
             imageV.contentMode = .scaleToFill
             return imageV
         }()
+    //MARK: - init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +25,8 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    //MARK: - setup image view
+    
     func setupViews(){
         addSubview(imageView)
         
