@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     
     //MARK: - Private properties
+    private var searchController = UISearchController(searchResultsController: nil)
     
     private lazy var dataFetcherService = DataFetcherService()
     
@@ -28,10 +29,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupViewSearchController()
         getNewPhotos()
     }
     
     //MARK: - Private Methods
+    private func setupViewSearchController(){
+        searchController.searchBar.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    private func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+//    private func isFiltering() -> Bool {
+//        return searchController.isActive && !searchBarIsEmpty()
+//    }
+   
     private func getNewPhotos(){
         dataFetcherService.fetchNewPhotos { [weak self] (photos) in
                    guard let photos = photos else {return}
@@ -57,7 +73,6 @@ class ViewController: UIViewController {
 
             DispatchQueue.main.async {
                 self?.collectionView?.reloadData()
-                self?.pageControl.reloadInputViews()
             }
         }
     }
@@ -138,5 +153,12 @@ extension ViewController : UICollectionViewDelegateFlowLayout {
 extension ViewController {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+    }
+}
+//MARK: - UISearchBarDelegate
+
+extension ViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            getSearchPhotos(query: searchBar.text!)
     }
 }
